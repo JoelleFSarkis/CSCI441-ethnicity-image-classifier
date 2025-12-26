@@ -1,3 +1,5 @@
 train/
 val/
 embeddings/
+models/
+svm_resnet50_finetuned.joblib
