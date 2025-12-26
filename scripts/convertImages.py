@@ -76,8 +76,8 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Device:", device)
 
-    # Load pretrained ResNet18
-    resnet = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
+    # Load pretrained ResNet50
+    resnet = models.resnet50(weights=models.ResNet50_Weights.IMAGENET1K_V1)
     resnet.fc = torch.nn.Identity()
     resnet.to(device)
 
@@ -90,7 +90,7 @@ if __name__ == "__main__":
     print("Extracting TRAIN embeddings...")
     X_train, y_train = extract_embeddings(train_loader, resnet, device, prefix="train")
     print("Train embeddings shape:", X_train.shape)
-    save_embeddings(X_train, y_train, train_ds.classes, prefix="resnet18_train")
+    save_embeddings(X_train, y_train, train_ds.classes, prefix="resnet50_train")
 
     # --- VALIDATION SET ---
     csv_path_val = "../final Dataset/cleaned_val.csv"
@@ -101,4 +101,4 @@ if __name__ == "__main__":
     print("Extracting VAL embeddings...")
     X_val, y_val = extract_embeddings(val_loader, resnet, device, prefix="val")
     print("Val embeddings shape:", X_val.shape)
-    save_embeddings(X_val, y_val, val_ds.classes, prefix="resnet18_val")
+    save_embeddings(X_val, y_val, val_ds.classes, prefix="resnet50_val")
