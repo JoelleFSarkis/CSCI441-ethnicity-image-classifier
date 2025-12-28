@@ -4,3 +4,4 @@ val/
 embeddings/
 models/
 svm_resnet50_finetuned.joblib
+rf_resnet50_finetuned.joblib
