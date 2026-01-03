@@ -5,3 +5,4 @@ embeddings/
 models/
 svm_resnet50_finetuned.joblib
 rf_resnet50_finetuned.joblib
+knn_resnet50_finetuned.joblib
