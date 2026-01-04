@@ -4,6 +4,7 @@ import numpy as np
 import joblib
 
 from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
@@ -19,11 +20,11 @@ def main():
     project_root = os.path.abspath(os.path.join(script_dir, ".."))
     emb_dir = os.path.join(project_root, "embeddings")
 
-    # ✅ Load fine-tuned embeddings
+    # ✅ Fine-tuned embeddings
     X_train = np.load(os.path.join(emb_dir, "X_resnet50_finetuned_train.npy"))
-    y_train = np.load(os.path.join(emb_dir, "y_resnet50_finetuned_train.npy"))
+    y_train = np.load(os.path.join(emb_dir, "y_resnet50_finetuned_train.npy")).ravel()
     X_val   = np.load(os.path.join(emb_dir, "X_resnet50_finetuned_val.npy"))
-    y_val   = np.load(os.path.join(emb_dir, "y_resnet50_finetuned_val.npy"))
+    y_val   = np.load(os.path.join(emb_dir, "y_resnet50_finetuned_val.npy")).ravel()
     classes = load_classes(os.path.join(emb_dir, "classes_resnet50_finetuned.txt"))
 
     print("✅ Loaded fine-tuned embeddings")
@@ -34,14 +35,14 @@ def main():
     for i, c in enumerate(classes):
         print(f"  {i} -> {c}")
 
-    # 🌲 Random Forest model
+    # ✅ Same conditions: scaler + classifier (no class_weight tricks)
     model = Pipeline([
+        ("scaler", StandardScaler()),
         ("rf", RandomForestClassifier(
             n_estimators=300,
             max_depth=None,
             min_samples_split=2,
             min_samples_leaf=1,
-            class_weight="balanced",
             n_jobs=-1,
             random_state=42
         ))
@@ -73,4 +74,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

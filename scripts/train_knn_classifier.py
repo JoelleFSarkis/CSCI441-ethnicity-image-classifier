@@ -22,9 +22,9 @@ def main():
 
     # ✅ Fine-tuned embeddings
     X_train = np.load(os.path.join(emb_dir, "X_resnet50_finetuned_train.npy"))
-    y_train = np.load(os.path.join(emb_dir, "y_resnet50_finetuned_train.npy"))
+    y_train = np.load(os.path.join(emb_dir, "y_resnet50_finetuned_train.npy")).ravel()
     X_val   = np.load(os.path.join(emb_dir, "X_resnet50_finetuned_val.npy"))
-    y_val   = np.load(os.path.join(emb_dir, "y_resnet50_finetuned_val.npy"))
+    y_val   = np.load(os.path.join(emb_dir, "y_resnet50_finetuned_val.npy")).ravel()
     classes = load_classes(os.path.join(emb_dir, "classes_resnet50_finetuned.txt"))
 
     print("✅ Loaded fine-tuned embeddings")
@@ -35,12 +35,11 @@ def main():
     for i, c in enumerate(classes):
         print(f"  {i} -> {c}")
 
-    # 🔁 KNN classifier (same pipeline structure)
+    # ✅ Same conditions: scaler + classifier (no class_weight tricks)
     model = Pipeline([
         ("scaler", StandardScaler()),
         ("knn", KNeighborsClassifier(
-            n_neighbors=5,       # common baseline
-            weights="distance",  # improves performance on embeddings
+            n_neighbors=5,
             metric="euclidean",
             n_jobs=-1
         ))

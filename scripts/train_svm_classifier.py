@@ -20,11 +20,11 @@ def main():
     project_root = os.path.abspath(os.path.join(script_dir, ".."))
     emb_dir = os.path.join(project_root, "embeddings")
 
-    # ✅ Fine-tuned embeddings (your file names)
+    # ✅ Fine-tuned embeddings
     X_train = np.load(os.path.join(emb_dir, "X_resnet50_finetuned_train.npy"))
-    y_train = np.load(os.path.join(emb_dir, "y_resnet50_finetuned_train.npy"))
+    y_train = np.load(os.path.join(emb_dir, "y_resnet50_finetuned_train.npy")).ravel()
     X_val   = np.load(os.path.join(emb_dir, "X_resnet50_finetuned_val.npy"))
-    y_val   = np.load(os.path.join(emb_dir, "y_resnet50_finetuned_val.npy"))
+    y_val   = np.load(os.path.join(emb_dir, "y_resnet50_finetuned_val.npy")).ravel()
     classes = load_classes(os.path.join(emb_dir, "classes_resnet50_finetuned.txt"))
 
     print("✅ Loaded fine-tuned embeddings")
@@ -35,21 +35,25 @@ def main():
     for i, c in enumerate(classes):
         print(f"  {i} -> {c}")
 
-    # Linear SVM baseline (fast + strong on embeddings)
+    # ✅ Same conditions: scaler + classifier (no class_weight tricks)
     model = Pipeline([
         ("scaler", StandardScaler()),
-        ("svm", LinearSVC(C=1.0, class_weight="balanced", max_iter=20000))
+        ("svm", LinearSVC(
+            C=1.0,
+            max_iter=20000,
+            random_state=42
+        ))
     ])
 
     print("\n🧠 Training Linear SVM...")
     t0 = time.time()
     model.fit(X_train, y_train)
-    print(f"✅ Training done in {time.time()-t0:.1f} seconds")
+    print(f"✅ Training done in {time.time() - t0:.1f} seconds")
 
     print("🔎 Evaluating on validation set...")
     t1 = time.time()
     preds = model.predict(X_val)
-    print(f"✅ Prediction done in {time.time()-t1:.1f} seconds")
+    print(f"✅ Prediction done in {time.time() - t1:.1f} seconds")
 
     acc = accuracy_score(y_val, preds)
     print(f"\n📌 Validation Accuracy: {acc:.4f}")
