@@ -32,58 +32,60 @@ Rather than training an end-to-end deep learning classifier, this project focuse
 
 ## Repository Structure
 
+```text
 CSCI441-ETHNICITY-IMAGE-CLASSIFIER/
 │
-├── cleaning-process/ # Dataset validation and cleaning scripts
-│ ├── check_duplicates.py
-│ ├── check_nulls.py
-│ └── clean_dataset.py
+├── cleaning-process/                 # Dataset validation and cleaning scripts
+│   ├── check_duplicates.py
+│   ├── check_nulls.py
+│   └── clean_dataset.py
 │
-├── converting-scripts/ # # CNN fine-tuning and feature extraction (GPU-based)
-│ ├── finetune_resnet50.py
-│ └── extract_embeddings_finetuned.py
+├── converting-scripts/               # CNN fine-tuning and feature extraction (GPU-based)
+│   ├── finetune_resnet50.py
+│   └── extract_embeddings_finetuned.py
 │
-├── embeddings/ # Saved CNN feature embeddings
-│ ├── classes_resnet50_finetuned.txt
-│ ├── X_resnet50_finetuned_train.npy
-│ ├── X_resnet50_finetuned_val.npy
-│ ├── y_resnet50_finetuned_train.npy
-│ └── y_resnet50_finetuned_val.npy
+├── embeddings/                       # Saved CNN feature embeddings
+│   ├── classes_resnet50_finetuned.txt
+│   ├── X_resnet50_finetuned_train.npy
+│   ├── X_resnet50_finetuned_val.npy
+│   ├── y_resnet50_finetuned_train.npy
+│   └── y_resnet50_finetuned_val.npy
 │
-├── initial Dataset/ # Original dataset CSV files
-│ ├── ethnicity-classifier-train.csv
-│ └── ethnicity-classifier-val.csv
+├── initial Dataset/                  # Original dataset CSV files
+│   ├── ethnicity-classifier-train.csv
+│   └── ethnicity-classifier-val.csv
 │
-├── final Dataset/ # Cleaned dataset CSV files
-│ ├── cleaned_train.csv
-│ └── cleaned_val.csv
+├── final Dataset/                    # Cleaned dataset CSV files
+│   ├── cleaned_train.csv
+│   └── cleaned_val.csv
 │
-├── models/ # Saved CNN model checkpoint
-│ └── resnet50_finetuned_best.pth
+├── models/                           # Saved CNN model checkpoint
+│   └── resnet50_finetuned_best.pth
 │
-├── reports/figures/ # Evaluation figures used in the report
-│ ├── cm_svm.png
-│ ├── cm_knn.png
-│ ├── cm_rf.png
-│ └── classwise_f1_comparison.png
+├── reports/figures/                  # Evaluation figures used in the report
+│   ├── cm_svm.png
+│   ├── cm_knn.png
+│   ├── cm_rf.png
+│   └── classwise_f1_comparison.png
 │
-├── scripts/ # Classical ML training and evaluation scripts
-│ ├── train_svm_classifier.py
-│ ├── train_knn_classifier.py
-│ ├── train_random_forest.py
-│ ├── export_confusion_matrices.py
-│ └── plot_classwise_f1.py
+├── scripts/                          # Classical ML training and evaluation scripts
+│   ├── train_svm_classifier.py
+│   ├── train_knn_classifier.py
+│   ├── train_random_forest.py
+│   ├── export_confusion_matrices.py
+│   └── plot_classwise_f1.py
 │
-├── train/ # Image training folder (NOT pushed – large size)
-├── val/ # Image validation folder (NOT pushed – large size)
+├── train/                            # Image training folder (NOT pushed – large size)
+├── val/                              # Image validation folder (NOT pushed – large size)
 │
-├── svm_resnet50_finetuned.joblib # Generated after training (not pushed by default)
-├── knn_resnet50_finetuned.joblib # Generated after training (not pushed by default)
-├── rf_resnet50_finetuned.joblib # Generated after training (not pushed by default)
+├── svm_resnet50_finetuned.joblib     # Generated after training (not pushed by default)
+├── knn_resnet50_finetuned.joblib     # Generated after training (not pushed by default)
+├── rf_resnet50_finetuned.joblib      # Generated after training (not pushed by default)
 │
 ├── .gitignore
 └── README.md
-
+---
+```
 
 ## Notes on Ignored Files and Folders
 
